@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dind-3
+spec:
+  containers:
+  - image: devjin24/centos-dind
+    command: ["tail"]
+    args: ["-f", "/dev/null"]
+    name: test-container
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock-volume
+  volumes:
+  - name: docker-sock-volume
+    hostPath:
+      path: /var/run/docker.sock
+      type: File
